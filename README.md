@@ -1,4 +1,4 @@
-# React State Exercise
+# React Todo Exercise
 
 This repos contains exercise project for the React State training sessions.
 Please follow the instruction below to setup the project.
