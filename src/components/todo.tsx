@@ -1,26 +1,30 @@
 import React from "react";
+import { deleteTodo } from './apiService'; 
 
 export type TodoProps = {
     userId?: number,
-    id?: number,
+    id: number,
     title?: string,
     completed?: boolean
 }
 
 export function Todo({ title, id }: TodoProps) {
-    // const removeTodo = (id) => {
-    //     console.log(id)
-    //     fetch(`http://localhost:3000/todos/${id}`, {
-    //         method: "DELETE"
-    //     })
-    // }
+    const removeTodo = () => {
+        deleteTodo(id)
+        .then(data => {
+            console.log("Deleted: ", data);
+        })
+        .catch(err => {
+            console.log("Failed to delete todo with id ", id, ", error:", err); 
+        })
+    }
     return (
         <li>
             <div className="view">
                 <input className="toggle"
                     type="checkbox" />
                 <label>{title}</label>
-                <button className="destroy"/>
+                <button className="destroy" id={id?.toString()} onClick={removeTodo}/>
             </div>
             <input className="edit" />
         </li>
