@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Header, Footer, Main, TodoProps, getTodos } from "./components/index";
 
 export default function App() {
@@ -13,7 +13,6 @@ export default function App() {
     .catch(err => {
       console.log("Err:", err); 
     })
-    
   }
 
   return (

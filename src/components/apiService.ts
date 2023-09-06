@@ -23,12 +23,34 @@ export const deleteTodo = async (id: number) => {
 
 export const addTodo = async (todo: TodoProps) => {
   console.log("Add todo: ", todo);
+  const res = await fetch(`${apiUrl}/todos`, {
+    method: "POST", 
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(todo)
+  })
+  if(!res.ok){
+    throw new Error("Failed to add todo")
+  }
+  return res.json(); 
 };
 
 export const updateTodo = async (todo: TodoProps) => {
-  console.log("Update Todo: ", todo);
+  const res = await fetch(`${apiUrl}/todos/${todo.id}`, {
+    method: "PUT",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(todo)
+  })
+  if(!res.ok){
+    throw new Error("Failed to update todo"); 
+  }
+  return res.json(); 
+
 };
 
 export const getTodo = async (id: number) => {
-  console.log("Get todo: ", id);
+  const res = await fetch(`${apiUrl}/todos/${id}`); 
+  if(!res.ok){
+    throw new Error("Error get todo");
+  }
+  return res.json();
 };

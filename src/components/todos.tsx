@@ -10,7 +10,7 @@ export function Todos({todos}: TodosProps) {
         <ul className="todo-list">
             {
                 todos?.map((todo, index) => {
-                    return <Todo title={todo.title} key={`${todo.title}-${index}`} id={todo.id} />
+                    return <Todo title={todo.title} key={`${todo.title}-${index}`} id={todo.id} completed={todo.completed}/>
                 })
             }
         </ul>

@@ -1,5 +1,5 @@
 import React from "react";
-import { deleteTodo } from './apiService'; 
+import { deleteTodo, updateTodo } from './apiService'; 
 
 export type TodoProps = {
     userId?: number,
@@ -8,7 +8,7 @@ export type TodoProps = {
     completed?: boolean
 }
 
-export function Todo({ title, id }: TodoProps) {
+export function Todo({ title, id, completed }: TodoProps) {
     const removeTodo = () => {
         deleteTodo(id)
         .then(data => {
@@ -18,11 +18,19 @@ export function Todo({ title, id }: TodoProps) {
             console.log("Failed to delete todo with id ", id, ", error:", err); 
         })
     }
+    const update = (checked: boolean) => {
+        updateTodo({id: id, completed: checked, title: title})
+        .then(data => {
+            console.log("Todo updated", data); 
+        })
+        .catch(err => {
+            console.log("Failed to update todo with id: ", id, ", error: ", err);
+        })
+    }
     return (
         <li>
             <div className="view">
-                <input className="toggle"
-                    type="checkbox" />
+                <input className="toggle" type="checkbox" onClick={(event) => update(event.currentTarget.checked)} checked={completed}/>
                 <label>{title}</label>
                 <button className="destroy" id={id?.toString()} onClick={removeTodo}/>
             </div>
