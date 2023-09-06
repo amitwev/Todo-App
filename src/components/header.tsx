@@ -1,29 +1,27 @@
 import React, { useState } from 'react';
+import { addTodo } from './apiService';
+import { TodoProps } from '.';
 
 interface HeaderProps {
     title: string;
 }
 export function Header({ title }: HeaderProps) {
     const [inputValue, setInputValue] = useState<string>("");
-    const handleCliks = (e: React.KeyboardEvent<HTMLElement>) => {
+    const handleClicks = (e: React.KeyboardEvent<HTMLElement>) => {
         const acceptedElements = ["Enter", "NumpadEnter"]
         if (acceptedElements.includes(e.code)) {
             console.log("need to save the input", inputValue);
-            //reset the input
-            fetch('http://localhost:3000/todos', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "title": inputValue,
-                    "completed": false
-                })
+            addTodo({
+                title: inputValue,
+                completed: false,
+                id: undefined
             })
-            .then(res => {
-                if(res.status === 201){
-                    setInputValue(""); 
-                }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            .then((data: TodoProps) => {
+                setInputValue("");
+            })
+            .catch(err => {
+                console.log("failed to add todo:", err)
             })
         }
     }
@@ -35,7 +33,7 @@ export function Header({ title }: HeaderProps) {
     return (
         <header className="header">
             <h1>{title}</h1>
-            <input className="new-todo" placeholder="What needs to be done?" autoFocus value={inputValue} onChange={handleInputChange} onKeyUp={handleCliks} />
+            <input className="new-todo" placeholder="What needs to be done?" autoFocus value={inputValue} onChange={handleInputChange} onKeyUp={handleClicks} />
         </header>
     )
 }

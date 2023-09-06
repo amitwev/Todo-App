@@ -10,7 +10,7 @@ export const getTodos = async () => {
   return res.json();
 };
 
-export const deleteTodo = async (id: number) => {
+export const deleteTodo = async (id: string) => {
   console.log("remove todo:", id);
   const res = await fetch(`${apiUrl}/todos/${id}`, {
     method: "DELETE"
