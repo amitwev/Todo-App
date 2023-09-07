@@ -1,25 +1,38 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useEffect, useState } from "react";
-import { Header, Footer, Main, TodoProps, getTodos } from "./components/index";
+import React, { useState, useEffect } from "react";
+import {
+  Header,
+  Footer,
+  Main,
+  TodoProps,
+  getTodos,
+  TodoContext,
+} from "./components/index";
 
 export default function App() {
   const [todos, setTodos] = useState<TodoProps[]>();
+  const [updateTodos, setUpdateTodos] = useState<boolean>(true);
 
-  if (!todos) {
-    getTodos()
-    .then((data: TodoProps[]) => {
-      setTodos(data); 
-    })
-    .catch(err => {
-      console.log("Err:", err); 
-    })
-  }
+  useEffect(() => {
+    if (updateTodos) {
+      console.log("update todos");
+      getTodos()
+        .then((data: TodoProps[]) => {
+          setTodos(data);
+          setUpdateTodos(false);
+        })
+        .catch((err) => {
+          console.log("Err:", err);
+        });
+    }
+  }, [updateTodos]);
 
   return (
-    <section className="todoapp">
-      <Header title="todos" />
-      <Main todos={todos} />
-      <Footer leftItems={todos?.length} />
-    </section>
+    <TodoContext setUpdateTodos={setUpdateTodos}>
+      <section className="todoapp">
+        <Header title="todos" />
+        <Main todos={todos} />
+        <Footer leftItems={todos?.length} />
+      </section>
+    </TodoContext>
   );
 }

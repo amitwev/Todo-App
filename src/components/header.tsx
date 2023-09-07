@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { addTodo } from './apiService';
+import { addTodo, useTodoContext } from './index';
 import { TodoProps } from '.';
 
 interface HeaderProps {
     title: string;
 }
 export function Header({ title }: HeaderProps) {
+    const todoContext = useTodoContext();
     const [inputValue, setInputValue] = useState<string>("");
     const handleClicks = (e: React.KeyboardEvent<HTMLElement>) => {
         const acceptedElements = ["Enter", "NumpadEnter"]
         if (acceptedElements.includes(e.code)) {
-            console.log("need to save the input", inputValue);
             addTodo({
                 title: inputValue,
                 completed: false,
@@ -19,6 +19,7 @@ export function Header({ title }: HeaderProps) {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             .then((data: TodoProps) => {
                 setInputValue("");
+                todoContext?.setUpdateTodos(true);
             })
             .catch(err => {
                 console.log("failed to add todo:", err)

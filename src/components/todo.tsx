@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { deleteTodo, updateTodo } from "./apiService";
+import React, { useState } from "react";
+import { deleteTodo, useTodoContext } from "./index";
+// import { deleteTodo, updateTodo } from "./index";
+
 
 export type TodoProps = {
   userId?: number;
@@ -12,11 +14,14 @@ export function Todo({ title, id, completed }: TodoProps) {
   const [text, setText] = useState(title);
   const [isEdit, setIsEdit] = useState(false);
   const [isChecked, setIsChecked] = useState(completed);
+  const todoContext = useTodoContext();
+
 
   const removeTodo = (id: string) => {
     deleteTodo(id)
       .then((data) => {
         console.log("Deleted: ", data);
+        todoContext?.setUpdateTodos(true);
       })
       .catch((err) => {
         console.log("Failed to delete todo with id ", id, ", error:", err);
@@ -43,6 +48,7 @@ export function Todo({ title, id, completed }: TodoProps) {
 //     updateTodo(todo)
 //     .then((data) => {
 //       console.log("Todo updated", data);
+//      todoContext?.setUpdateTodos(true);
 //     })
 //     .catch((err) => {
 //       console.log("Failed to update todo with id: ", id, ", error: ", err);
