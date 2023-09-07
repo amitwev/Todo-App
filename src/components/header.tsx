@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { addTodo, useTodoContext } from './index';
-import { TodoProps } from '.';
 
 interface HeaderProps {
     title: string;
@@ -16,8 +15,7 @@ export function Header({ title }: HeaderProps) {
                 completed: false,
                 id: undefined
             })
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            .then((data: TodoProps) => {
+            .then(() => {
                 setInputValue("");
                 todoContext?.setUpdateTodos(true);
             })

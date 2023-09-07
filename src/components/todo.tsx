@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { deleteTodo, useTodoContext } from "./index";
-// import { deleteTodo, updateTodo } from "./index";
-
 
 export type TodoProps = {
   userId?: number;
@@ -44,19 +42,19 @@ export function Todo({ title, id, completed }: TodoProps) {
     setIsEdit(false);
   };
 
-//   const updateTodoElement = (todo: TodoProps) => {
-//     updateTodo(todo)
-//     .then((data) => {
-//       console.log("Todo updated", data);
-//      todoContext?.setUpdateTodos(true);
-//     })
-//     .catch((err) => {
-//       console.log("Failed to update todo with id: ", id, ", error: ", err);
-//     });
-//   }
+  // const updateTodoElement = (todo: TodoProps) => {
+  //   updateTodo(todo)
+  //   .then((data) => {
+  //     console.log("Todo updated", data);
+  //    todoContext?.setUpdateTodos(true);
+  //   })
+  //   .catch((err) => {
+  //     console.log("Failed to update todo with id: ", id, ", error: ", err);
+  //   });
+  // }
 
   return (
-    <li>
+    <li data-is-completed={completed}>
       <div className="view">
         <input
           className="toggle"

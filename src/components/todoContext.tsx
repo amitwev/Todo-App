@@ -19,6 +19,7 @@ export function TodoContext({ children, setUpdateTodos }: TodoContextProps) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useTodoContext() {
   return useContext(Context);
 }
