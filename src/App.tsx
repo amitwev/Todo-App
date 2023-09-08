@@ -1,41 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, {  } from "react";
 import {
   Header,
   Footer,
   Main,
   TodoProps,
   // getTodos,
-  TodoContext,
+  // TodoContext,
   useFetch,
-  getTodos
+  // getTodos
 } from "./components/index";
 
 export default function App() {
-  const [todos, setTodos] = useState<TodoProps[]>();
-  const [updateTodos, setUpdateTodos] = useState<boolean>(true);
+  // const [todos, setTodos] = useState<TodoProps[]>();
   const api = useFetch<TodoProps[]>('http://localhost:3000/todos');
+  // console.log("Api: ", api); 
 
-  useEffect(() => {    
-    if (updateTodos) {
-      console.log("update todos");
-      getTodos()
-        .then((data: TodoProps[]) => {
-          setTodos(data);
-          setUpdateTodos(false);
-        })
-        .catch((err) => {
-          console.log("Err:", err);
-        });
-    }
-  }, [updateTodos]);
+  // useEffect(() => {    
+  //   if (updateTodos) {
+  //     console.log("update todos");
+  //     getTodos()
+  //       .then((data: TodoProps[]) => {
+  //         setTodos(data);
+  //         setUpdateTodos(false);
+  //       })
+  //       .catch((err) => {
+  //         console.log("Err:", err);
+  //       });
+  //   }
+  // }, [updateTodos]);
 
   return (
-    <TodoContext setUpdateTodos={setUpdateTodos}>
       <section className="todoapp">
         <Header title="todos" />
-        <Main todos={todos} />
-        <Footer leftItems={todos?.length} />
+        <Main todos={api.data} />
+        <Footer leftItems={api.data?.length} />
       </section>
-    </TodoContext>
   );
 }

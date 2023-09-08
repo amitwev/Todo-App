@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { TodoProps } from "./todo";
+import { useTodoContext } from "./index";
 
 const apiUrl = "http://localhost:3000";
 
@@ -61,13 +62,15 @@ type FetchOptions<T> = {
   body: T;
 }
 
-export const useFetch = <T>(url: string, forceFetch?: boolean, options?: FetchOptions<T>) => {
+export const useFetch = <T>(url: string, options?: FetchOptions<T>) => {
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
+  const todoContext = useTodoContext();
+  
   useEffect(() => {
     async function fetchData() {
+      todoContext?.setUpdateTodos(false);
       try {
         const res = await fetch(url, {
           method: options?.method || "GET",
@@ -86,7 +89,7 @@ export const useFetch = <T>(url: string, forceFetch?: boolean, options?: FetchOp
     }
     fetchData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ url ]);
+  }, [ url, todoContext?.updateTodos ]);
   
   return { data, loading, error };
 };

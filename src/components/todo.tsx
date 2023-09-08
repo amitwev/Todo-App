@@ -13,7 +13,6 @@ export function Todo({ title, id, completed }: TodoProps) {
   const [isEdit, setIsEdit] = useState(false);
   const [isChecked, setIsChecked] = useState(completed);
   const todoContext = useTodoContext();
-
   const removeTodo = (id: string) => {
     deleteTodo(id)
       .then((data) => {
