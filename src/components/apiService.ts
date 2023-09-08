@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { TodoProps } from "./todo";
-import { useTodoContext } from "./todoContext";
 
 const apiUrl = "http://localhost:3000";
 
@@ -66,8 +65,6 @@ export const useFetch = <T>(url: string, forceFetch?: boolean, options?: FetchOp
   const [data, setData] = useState<T>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const todoContext = useTodoContext();
-  todoContext?.setUpdateTodos(false);
 
   useEffect(() => {
     async function fetchData() {
