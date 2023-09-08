@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteTodo, useTodoContext } from "./index";
+import { deleteTodo, useTodoContext, updateTodo } from "./index";
 
 export type TodoProps = {
   userId?: number;
@@ -14,7 +14,6 @@ export function Todo({ title, id, completed }: TodoProps) {
   const [isChecked, setIsChecked] = useState(completed);
   const todoContext = useTodoContext();
 
-
   const removeTodo = (id: string) => {
     deleteTodo(id)
       .then((data) => {
@@ -27,7 +26,10 @@ export function Todo({ title, id, completed }: TodoProps) {
   };
 
   const updateCheckbox = () => {
-    setIsChecked((prev) => !prev);
+    setIsChecked((prev) => {
+      updateTodoElement({id: id, title: text, completed: !prev })
+      return !prev
+    });
   };
 
   const editElement = () => {
@@ -40,18 +42,18 @@ export function Todo({ title, id, completed }: TodoProps) {
 
   const handleInputBlur = () => {
     setIsEdit(false);
+    updateTodoElement({id: id, title: text, completed: isChecked })
   };
 
-  // const updateTodoElement = (todo: TodoProps) => {
-  //   updateTodo(todo)
-  //   .then((data) => {
-  //     console.log("Todo updated", data);
-  //    todoContext?.setUpdateTodos(true);
-  //   })
-  //   .catch((err) => {
-  //     console.log("Failed to update todo with id: ", id, ", error: ", err);
-  //   });
-  // }
+  const updateTodoElement = (todo: TodoProps) => {
+    updateTodo(todo)
+    .then(() => {
+     todoContext?.setUpdateTodos(true);
+    })
+    .catch((err) => {
+      console.log("Failed to update todo with id: ", id, ", error: ", err);
+    });
+  }
 
   return (
     <li data-is-completed={completed}>

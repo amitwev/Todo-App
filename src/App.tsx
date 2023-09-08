@@ -6,11 +6,14 @@ import {
   TodoProps,
   getTodos,
   TodoContext,
+  useFetch
 } from "./components/index";
 
 export default function App() {
   const [todos, setTodos] = useState<TodoProps[]>();
   const [updateTodos, setUpdateTodos] = useState<boolean>(true);
+  const api = useFetch('http://localhost:3000/todos');
+  console.log("Api:", api);
 
   useEffect(() => {
     if (updateTodos) {
