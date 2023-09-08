@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Header,
   Footer,
   Main,
   TodoProps,
-  getTodos,
+  // getTodos,
   TodoContext,
-  useFetch
+  useFetch,
+  getTodos
 } from "./components/index";
 
 export default function App() {
   const [todos, setTodos] = useState<TodoProps[]>();
   const [updateTodos, setUpdateTodos] = useState<boolean>(true);
-  const api = useFetch('http://localhost:3000/todos');
-  console.log("Api:", api);
+  const api = useFetch<TodoProps[]>('http://localhost:3000/todos');
 
-  useEffect(() => {
+  useEffect(() => {    
     if (updateTodos) {
       console.log("update todos");
       getTodos()

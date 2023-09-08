@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { TodoProps } from "./todo";
+import { useTodoContext } from "./todoContext";
 
 const apiUrl = "http://localhost:3000";
 
@@ -56,35 +57,39 @@ export const getTodo = async (id: number) => {
 };
 
 type FetchOptions<T> = {
-  method: "POST" | "GET" | "PUT" | "DELETE";
-  headers?: any;
+  method: "GET" | "POST" | "PUT" | "DELETE";
+  headers?: HeadersInit;
   body: T;
 }
 
-export const useFetch = (url: string, options?: FetchOptions) => {
-  const [data, setData] = useState();
+export const useFetch = <T>(url: string, forceFetch?: boolean, options?: FetchOptions<T>) => {
+  const [data, setData] = useState<T>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const todoContext = useTodoContext();
+  todoContext?.setUpdateTodos(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const res = await fetch(url, {
-          method: options.method, 
-          headers: options.headers, 
-          body: JSON.stringify(options.body)
+          method: options?.method || "GET",
+          headers: options?.headers, 
+          body: JSON.stringify(options?.body)
         });
         const content = await res.json();
         setLoading(false);
         setData(content);
-      } catch (err) {
-        console.log("Error:", err);
-        setError(err?.message);
+      } catch (err: unknown) {
+        if(err instanceof Error){
+          setError(err.message);
+        }
         setLoading(false);
       }
     }
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ url ]);
-
+  
   return { data, loading, error };
 };
