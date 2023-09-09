@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteTodo, useTodoContext, updateTodo } from "./index";
+import { deleteTodo, useTodoContext, updateTodo } from "../imports";
 
 export type TodoProps = {
   userId?: number;
@@ -13,15 +13,9 @@ export function Todo({ title, id, completed }: TodoProps) {
   const [isEdit, setIsEdit] = useState(false);
   const [isChecked, setIsChecked] = useState(completed);
   const todoContext = useTodoContext();
-  const removeTodo = (id: string) => {
-    deleteTodo(id)
-      .then((data) => {
-        console.log("Deleted: ", data);
-        todoContext?.setUpdateTodos(true);
-      })
-      .catch((err) => {
-        console.log("Failed to delete todo with id ", id, ", error:", err);
-      });
+  const removeTodo = async (id: string) => {
+    await deleteTodo(id); 
+    todoContext?.setUpdateTodos(true);
   };
 
   const updateCheckbox = () => {

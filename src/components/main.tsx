@@ -1,6 +1,6 @@
 import React from "react";
 import { Todos } from "./todos";
-import { TodoProps } from ".";
+import { TodoProps } from "../imports";
 
 type MainProps = {
     todos?: TodoProps[];

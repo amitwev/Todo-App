@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./components/App";
-import { TodoContext } from "./components";
+import { TodoContext } from "./imports";
 import "./index.css";
 
 const MainApp = () => {
