@@ -11,12 +11,17 @@ export const getTodo = async (id: number) => {
   return data; 
 };
 
-export const deleteTodo = async (id: string) => {
+export const deleteTodo = async (id: string | undefined) => {
   const data = await makeApiRequest<unknown>(`/todos/${id}`, {
     method: "DELETE",
   });
   return data; 
 };
+
+export const deleteTodos = async (id: (string | undefined)[] | undefined) => {
+  const data = id?.map(todo => deleteTodo(todo))
+  return data;
+}
 
 export const addTodo = async (todo: TodoProps) => {
   const data = await makeApiRequest<TodoProps>(`/todos`, {

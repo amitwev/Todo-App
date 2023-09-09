@@ -5,7 +5,8 @@ import {
   Section,
   TodoProps,
   useTodoContext,
-  getAllTodos
+  getAllTodos,
+  deleteTodos
 } from "../imports";
 
 export function App() {
@@ -24,11 +25,18 @@ export function App() {
     }
   }, [todos, todoContext?.updateTodos]);
 
+  const clearCompleted = async () => {
+    const tds = todos?.filter(item => item.completed); 
+    const ids = tds?.map(todo => todo.id); 
+    await deleteTodos(ids);
+    todoContext?.setUpdateTodos(true);
+  }
+
   return (
-      <section className="todoapp">
+      <div className="todoapp">
         <Header title="todos" />
         <Section todos={todos} />
-        <Footer leftItems={todos?.length} />
-      </section>
+        <Footer leftItems={todos?.length} clearCompleted={clearCompleted}/>
+      </div>
   );
 }
