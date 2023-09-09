@@ -1,4 +1,4 @@
-# React Todo Exercise
+# React Todo App
 
 This repos contains exercise project for the React State.
 
