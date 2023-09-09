@@ -1,20 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./components/App";
-import { TodoContext } from "./imports";
-import "./index.css";
-
-const MainApp = () => {
-  const [updateTodos, setUpdateTodos] = useState<boolean>(true);
-  return (
-    <TodoContext setUpdateTodos={setUpdateTodos} updateTodos={updateTodos}>
-      <App />
-    </TodoContext>
-  );
-};
+import "./styles/index.css";
+import { AppContainer } from "./imports";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <MainApp />
+    <AppContainer />
   </React.StrictMode>
 );

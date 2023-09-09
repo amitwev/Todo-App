@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import {
   Header,
   Footer,
-  Main,
+  Section,
   TodoProps,
   useTodoContext,
   getAllTodos
 } from "../imports";
 
-export default function App() {
+export function App() {
   const [todos, setTodos] = useState<TodoProps[]>();
   const todoContext = useTodoContext();
 
@@ -27,7 +27,7 @@ export default function App() {
   return (
       <section className="todoapp">
         <Header title="todos" />
-        <Main todos={todos} />
+        <Section todos={todos} />
         <Footer leftItems={todos?.length} />
       </section>
   );

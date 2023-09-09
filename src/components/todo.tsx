@@ -13,6 +13,7 @@ export function Todo({ title, id, completed }: TodoProps) {
   const [isEdit, setIsEdit] = useState(false);
   const [isChecked, setIsChecked] = useState(completed);
   const todoContext = useTodoContext();
+
   const removeTodo = async (id: string) => {
     await deleteTodo(id); 
     todoContext?.setUpdateTodos(true);
@@ -38,14 +39,9 @@ export function Todo({ title, id, completed }: TodoProps) {
     updateTodoElement({id: id, title: text, completed: isChecked })
   };
 
-  const updateTodoElement = (todo: TodoProps) => {
-    updateTodo(todo)
-    .then(() => {
-     todoContext?.setUpdateTodos(true);
-    })
-    .catch((err) => {
-      console.log("Failed to update todo with id: ", id, ", error: ", err);
-    });
+  const updateTodoElement = async (todo: TodoProps) => {
+    await updateTodo(todo);
+    todoContext?.setUpdateTodos(true);
   }
 
   return (
