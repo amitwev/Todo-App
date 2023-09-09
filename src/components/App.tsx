@@ -8,7 +8,7 @@ import {
   // TodoContext,
   useFetch,
   // getTodos
-} from "./components/index";
+} from "./index";
 
 export default function App() {
   // const [todos, setTodos] = useState<TodoProps[]>();

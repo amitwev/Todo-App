@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { TodoProps } from "./todo";
-import { useTodoContext } from "./index";
+import { TodoProps } from "../components/todo";
+import { useTodoContext } from "../components/index";
 
 const apiUrl = "http://localhost:3000";
 
