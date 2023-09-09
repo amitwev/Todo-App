@@ -32,11 +32,15 @@ export function App() {
     todoContext?.setUpdateTodos(true);
   }
 
+  const completedItems = () => {
+    return todos?.filter(item => !item.completed).length;
+  }
+
   return (
       <div className="todoapp">
         <Header title="todos" />
         <Section todos={todos} />
-        <Footer leftItems={todos?.length} clearCompleted={clearCompleted}/>
+        <Footer leftItems={completedItems()} clearCompleted={clearCompleted} todosLength={todos?.length}/>
       </div>
   );
 }
